@@ -1,31 +1,29 @@
-// src/components/SellingItemsList/SellingItemsList.tsx
 import SellingItems from "../../components/SellingItems/SellingItems";
 import * as S from "./SellingItemsListStyle";
 import data from "../../data/data.json";
 
 interface SellingItemsListProps {
-  sellerName: string;
-  currentProductId: number;
+  filter?: (product: (typeof data.products)[0]) => boolean; // 선택적 필터 함수
 }
 
-export default function SellingItemsList({
-  sellerName,
-  currentProductId,
-}: SellingItemsListProps) {
-  // 판매자명이 같은 상품만, 현재 상품 제외
-  const filteredProducts = data.products.filter(
-    (p) => p.seller.name === sellerName && p.id !== currentProductId
-  );
+export default function SellingItemsList({ filter }: SellingItemsListProps) {
+  const filteredProducts = filter
+    ? data.products.filter(filter)
+    : data.products;
 
   return (
-    <S.ListHugger>
-      {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-          <SellingItems key={product.id} product={product} />
-        ))
-      ) : (
-        <div>판매자가 등록한 다른 상품이 없습니다.</div>
-      )}
-    </S.ListHugger>
+    <S.ListContainer>
+      <S.ListHugger>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <S.ItemWrapper key={product.id}>
+              <SellingItems product={product} />
+            </S.ItemWrapper>
+          ))
+        ) : (
+          <div>상품이 없습니다.</div>
+        )}
+      </S.ListHugger>
+    </S.ListContainer>
   );
 }

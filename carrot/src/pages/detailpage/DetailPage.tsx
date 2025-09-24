@@ -8,13 +8,14 @@ import * as S from "./DetailPageStyle";
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAppModalOpen, setIsAppModalOpen] = useState(false); 
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const [zoom, setZoom] = useState(1);
 
-  const zoomIn = () => setZoom((prev) => Math.min(prev + 0.2, 3)); // 최대 3배
-  const zoomOut = () => setZoom((prev) => Math.max(prev - 0.2, 0.5)); // 최소 0.5배
+  const zoomIn = () => setZoom((prev) => Math.min(prev + 0.2, 3));
+  const zoomOut = () => setZoom((prev) => Math.max(prev - 0.2, 0.5));
 
   const { id } = useParams<{ id: string }>();
   const product = data.products.find((p) => p.id === Number(id));
@@ -108,19 +109,33 @@ function DetailPage() {
             <S.Price>{product.price}</S.Price>
             <S.Description>{product.description}</S.Description>
             <S.Reactions> 채팅 2 · 관심12 · 조회 {product.views}</S.Reactions>
-            <S.ToTheApp type="button" value="당근 앱에서 보기" />
+            <S.ToTheApp
+              type="button"
+              value="당근 앱에서 보기"
+              onClick={() => setIsAppModalOpen(true)}
+            />
           </S.RightSection>
         </S.Hugger>
         <S.MoreHugger>
-          <S.More>{product.seller.name} 의 판매물품</S.More>
+          <S.BottomText>
+            <S.More>{product.seller.name} 의 판매물품</S.More>
+            <S.ShowMore to="/storemain">더 구경하기 &gt; </S.ShowMore>
+          </S.BottomText>
           <SellingItemsList
-            sellerName={product.seller.name}
-            currentProductId={product.id}
+            filter={(p) => p.seller.name === product.seller.name}
           />
         </S.MoreHugger>
         <S.MoreHugger>
-          <S.More>인기매물</S.More>
+          <S.BottomText>
+            {/* 인기매물은 조회수 50이상을 기준으로 띄웁니다! */}
+            <S.More>인기매물</S.More>
+            <S.ShowMore to="/storemain">더 구경하기 &gt; </S.ShowMore>
+          </S.BottomText>
+          <SellingItemsList
+            filter={(product) => product.views >= 50} // 조회수 50 이상만
+          />
         </S.MoreHugger>
+        {/* 사진 상세 모달 */}
         {isModalOpen && (
           <S.ModalOverlay onClick={closeModal}>
             <S.ModalContent onClick={(e) => e.stopPropagation()}>
@@ -142,7 +157,7 @@ function DetailPage() {
                 <S.ModalPrevButton
                   onClick={() => {
                     setCurrentIndex(currentIndex - 1);
-                    setZoom(1); // 확대 초기화
+                    setZoom(1);
                   }}
                 />
               )}
@@ -150,12 +165,45 @@ function DetailPage() {
                 <S.ModalNextButton
                   onClick={() => {
                     setCurrentIndex(currentIndex + 1);
-                    setZoom(1); // 확대 초기화
+                    setZoom(1);
                   }}
                 />
               )}
             </S.ModalContent>
           </S.ModalOverlay>
+        )}{" "}
+        {/* 앱 다운로드 모달 */}
+        {isAppModalOpen && (
+          <S.ModalAppOverlay onClick={() => setIsAppModalOpen(false)}>
+            <S.ModalBox onClick={(e) => e.stopPropagation()}>
+              <S.ModalAppHeader>
+                QR 코드 스캔
+                <S.CloseAppButton onClick={() => setIsAppModalOpen(false)}>
+                  ×
+                </S.CloseAppButton>
+              </S.ModalAppHeader>
+              <S.QRWrapper>
+                <S.InApp>당근 앱으로 열기</S.InApp>
+                <img
+                  src="/assets/qrcode.png"
+                  alt="QR 코드"
+                  style={{ width: "200px", height: "200px" }}
+                />
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: "14px",
+                    color: "#666",
+                  }}
+                >
+                  <br />
+                  모바일에서만 이용할 수 있어요.
+                  <br />
+                  휴대전화 카메라로 QR 코드를 스캔하세요.
+                </p>
+              </S.QRWrapper>
+            </S.ModalBox>
+          </S.ModalAppOverlay>
         )}
       </S.Container>
     </>

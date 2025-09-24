@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100vw;
   height: 70px;
-  z-index:1000;
 `;
 export const Hugger = styled.div`
   width: 100vw;
@@ -14,6 +13,7 @@ export const Hugger = styled.div`
   align-items: center;
   position: fixed;
   background-color: white;
+  z-index: 999;
   top: 0;
   box-shadow: 0 2px 6px rgba(244, 244, 244, 0.1);
   @media (max-width: 980px) {
@@ -310,3 +310,14 @@ export const InputSearchHugger = styled.div`
 export const MiniSearch = styled.img`
   width:15px;
 `;
+export const QRWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+`;
+export const InApp = styled.span`
+  font-size:23px;
+  font-weight:500;
+
+`
