@@ -16,17 +16,53 @@
     },
     {
       "id": 2,
-      "images": ["/assets/ipadset1.webp", "/assets/ipadset2.webp", "/assets/ipadset3.webp"],
+      "images": [
+        "/assets/ipadset1.webp",
+        "/assets/ipadset2.webp",
+        "/assets/ipadset3.webp"
+      ],
       "title": "아이패드 프로 11 m4 256g(셀룰러) 스페이스 그레이 + 펜슬프로 + (정품)스마트폴리오",
       "category": "디지털기기",
       "time": "30분 전",
       "price": "1,500,000원",
       "description": "아이패드 프로 11 m4 256g 셀룰러 스페이스 그레이(풀박) 애플펜슬프로 애플정품 스마트폴리오 케이스 슈피겐 카본 패턴 매직키보드 호환 케이스(68,000)",
-      "reactions": {
-        "chat": 0,
-        "interest": 5,
-        "views": 40
-      },
+      "views": 40,
+      "seller": {
+        "name": "라일락",
+        "location": "노원구"
+      }
+    },
+    {
+      "id": 3,
+      "images": [
+        "/assets/ipadpro1.webp",
+        "/assets/ipadpro2.webp",
+        "/assets/ipadpro3.webp"
+      ],
+      "title": "아이패드 프로 11 m4 정품 매직키보드",
+      "category": "디지털기기",
+      "time": "19일 전",
+      "price": "300,000원",
+      "description": "아이패드 매직 키보드 판매합니다! 박스도 같이 드려요~  상태는 사진과 같습니다. 거래장소는 쌍문4동 주민센터입니다.",
+      "views": 40,
+      "seller": {
+        "name": "라일락",
+        "location": "노원구"
+      }
+    },
+    {
+      "id": 4,
+      "images": [
+        "/assets/ipadset1.webp",
+        "/assets/ipadset2.webp",
+        "/assets/ipadset3.webp"
+      ],
+      "title": "아이패드 프로 11 m4 256g(셀룰러) 스페이스 그레이 + 펜슬프로 + (정품)스마트폴리오",
+      "category": "디지털기기",
+      "time": "30분 전",
+      "price": "1,500,000원",
+      "description": "아이패드 프로 11 m4 256g 셀룰러 스페이스 그레이(풀박) 애플펜슬프로 애플정품 스마트폴리오 케이스 슈피겐 카본 패턴 매직키보드 호환 케이스(68,000)",
+      "views": 40,
       "seller": {
         "name": "라일락",
         "location": "노원구"
