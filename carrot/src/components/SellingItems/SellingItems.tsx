@@ -1,13 +1,24 @@
+// src/components/SellingItems/SellingItems.tsx
 import * as S from "./SellingItemsStyle";
-import { useParams } from "react-router-dom";
-import data from "../../data/data.json";
 
-export default function SellingItems() {
-  const { id } = useParams<{ id: string }>();
-  const product = data.products.find((p) => p.id === Number(id));
-  
-  if (!product) return <div>상품을 찾을 수 없습니다</div>;
+interface Product {
+  id: number;
+  images: string[];
+  title: string;
+  category: string;
+  time: string;
+  price: string;
+  seller: {
+    name: string;
+    location: string;
+  };
+}
 
+interface Props {
+  product: Product;
+}
+
+export default function SellingItems({ product }: Props) {
   const truncatedTitle =
     product.title.length > 12
       ? product.title.slice(0, 12) + "..."

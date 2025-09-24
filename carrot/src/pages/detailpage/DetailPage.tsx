@@ -113,7 +113,10 @@ function DetailPage() {
         </S.Hugger>
         <S.MoreHugger>
           <S.More>{product.seller.name} 의 판매물품</S.More>
-          <SellingItemsList />
+          <SellingItemsList
+            sellerName={product.seller.name}
+            currentProductId={product.id}
+          />
         </S.MoreHugger>
         <S.MoreHugger>
           <S.More>인기매물</S.More>
