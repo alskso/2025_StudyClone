@@ -7,7 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/detailpage" element={<DetailPage />} />
+        {/* 세부페이지로 이동하고싶으시면 /detailpage/1과 같이 id값 붙여서 치셔야 합니다! */}
+        <Route path="/detailpage/:id" element={<DetailPage />} />
       </Routes>
     </BrowserRouter>
   );
