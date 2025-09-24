@@ -1,5 +1,5 @@
-// src/components/SellingItems/SellingItems.tsx
 import * as S from "./SellingItemsStyle";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -19,12 +19,19 @@ interface Props {
 }
 
 export default function SellingItems({ product }: Props) {
+  const navigate = useNavigate();
+
   const truncatedTitle =
     product.title.length > 12
       ? product.title.slice(0, 12) + "..."
       : product.title;
+
+  const handleClick = () => {
+    navigate(`/detailpage/${product.id}`);
+  };
+
   return (
-    <S.Card>
+    <S.Card onClick={handleClick} style={{ cursor: "pointer" }}>
       <S.ImageContainer>
         <S.Image src={product.images[0]} alt="상품이미지" />
       </S.ImageContainer>

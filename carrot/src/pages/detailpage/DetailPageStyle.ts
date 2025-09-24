@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 
 export const Container = styled.div`
@@ -29,7 +30,8 @@ export const LeftSection = styled.div`
 `;
 
 export const root = styled.div`
-    margin-left:-35vw;
+  display:flex;
+  width:100%;
 `;
 
 export const ProductImage = styled.img`
@@ -184,10 +186,6 @@ export const ToTheApp = styled.input`
   }
 `;
 
-export const More = styled.div`
-    font-size: 23px;
-    font-weight: 500;
-`;
 
 export const MoreHugger = styled.div`
   display: flex;
@@ -351,4 +349,92 @@ export const Dot = styled.div<{ active?: boolean }>`
   border-radius: 50%;
   background-color: ${({ active }) => (active ? "#ffffffff" : "#cccccc93")};
   cursor: pointer;
+`;
+
+export const More = styled.div`
+  font-size: 23px;
+  font-weight: 500;
+`;
+
+export const BottomText = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+`;
+
+export const ShowMore = styled(Link)`
+  color: #ff720f;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const QRWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+`;
+
+export const ModalAppOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalBox = styled.div`
+  position: relative;
+  background: #fff;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+export const ModalAppHeader = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+
+export const CloseAppButton = styled.button`
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 40px;
+  cursor: pointer;
+`;
+
+export const InApp = styled.span`
+  font-size: 23px;
+  font-weight: 500;
 `;
