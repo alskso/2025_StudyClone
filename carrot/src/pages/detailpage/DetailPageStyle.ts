@@ -34,13 +34,16 @@ export const root = styled.div`
 
 export const ProductImage = styled.img`
   height:100%;
-  max-width: 450px;
-  border-radius: 8px;
+  width:100%;
   object-fit: cover;
 `;
 
 export const Imghugger = styled.div`
-    height:450px;
+  height: 450px;
+  width: 450px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
 `;
 
 export const SellerInfo = styled.div`
@@ -198,4 +201,154 @@ export const MoreHugger = styled.div`
   &:last-child {
     border-bottom: none;
   }
+`;
+export const PrevButton = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url("/assets/prevbtn.png") no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 20px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url("/assets/nextbtn.png") no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 20px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+export const ModalContent = styled.div`
+  max-width: 90%;
+  max-height: 90%;
+  overflow: visible; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+
+export const ModalImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+`;
+
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10;
+`;
+export const ModalPrevButton = styled.button`
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url("/assets/prevbtn.png") no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 10px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const ModalNextButton = styled.button`
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url("/assets/nextbtn.png") no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 10px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+`;
+export const ZoomControls = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    background: transparent;
+    color: #eee;
+  }
+`;
+
+export const DotsWrapper = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+`;
+
+export const Dot = styled.div<{ active?: boolean }>`
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: ${({ active }) => (active ? "#ffffffff" : "#cccccc93")};
+  cursor: pointer;
 `;
