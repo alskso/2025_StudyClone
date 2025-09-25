@@ -1,13 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+import MainHeader from "./components/Header/MainHeader";
+import MainPage from "./pages/mainpage/MainPage";
 import DetailPage from "./pages/detailpage/DetailPage";
 
 function App() {
+  const [location, setLocation] = useState("쌍문동");
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <BrowserRouter>
+      {/* 헤더는 항상 렌더링, 모달도 여기서 렌더 */}
+      <MainHeader location={location} showModal={showModal} setShowModal={setShowModal} />
+
       <Routes>
-        {/* 세부페이지로 이동하고싶으시면 /detailpage/1과 같이 id값 붙여서 치셔야 합니다! */}
+        <Route path="/mainpage" element={<MainPage location={location} setLocation={setLocation}  setShowModal={setShowModal} />} />
         <Route path="/detailpage/:id" element={<DetailPage />} />
       </Routes>
     </BrowserRouter>
