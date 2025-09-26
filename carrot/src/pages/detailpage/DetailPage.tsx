@@ -3,10 +3,15 @@ import SellingItemsList from "../../components/SellingItemsList/SellingItemsList
 import data from "../../data/data.json";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { Product } from "../../types";
 
 import * as S from "./DetailPageStyle";
 
-function DetailPage() {
+type DetailPageProps = {
+  products: Product[];
+};
+
+function DetailPage({ products }: DetailPageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAppModalOpen, setIsAppModalOpen] = useState(false); 
 

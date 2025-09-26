@@ -1,12 +1,13 @@
 import { useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-// import MainHeader from "../../components/Header/MainHeader";
 import * as S from "../../pages/mainpage/MainPageStyle";
+import { Product } from "../../types";
 
 type MainPageProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   location: string;
   setLocation: (loc: string) => void;
+  products: Product[];
 };
 
 
@@ -89,14 +90,14 @@ const CATEGORIES: { key: Category; icon: ReactNode  }[] = [
 
 const KEYWORDS = ["에어컨", "러닝모임", "노트북", "원룸", "현대 중고차", "이사짐", "알바", "근처 맛집", "투표"];
 const NEIGHBORHOODS = [
-  "송도동","역삼동","문곰읍","봉담읍","배방읍","서초동","옥정동","신림동","불당동","향남읍",
+  "노원구","역삼동","문곰읍","봉담읍","배방읍","서초동","옥정동","신림동","불당동","향남읍",
   "청담동","다산동","별내동","화도읍","다사읍","마곡동","압구정동","배곧동","고덕동","오창읍",
 ];
 
 // 3초마다 바뀔 단어들
 const ROTATE_WORDS = ["중고차", "러닝 모임", "알바", "노트북", "에어컨", "부동산"];
 
-function MainPage({ setShowModal, location, setLocation }: MainPageProps) {
+function MainPage({ setShowModal, location, setLocation, products }: MainPageProps) {
   const [category, setCategory] = useState<Category>("중고거래");
   const [query, setQuery] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
@@ -112,9 +113,22 @@ function MainPage({ setShowModal, location, setLocation }: MainPageProps) {
     return () => clearInterval(timer);
   }, []);
 
+  // 검색 실행
   const onSearch = () => {
-    console.log({ location, category, query });
-  };
+    const filtered = products.filter((p) => {
+      const matchTitle = p.title.toLowerCase().includes(query.toLowerCase());
+      const matchLocation = p.seller.location.includes(location);
+      const matchCategory = category === "중고거래" ? true : p.category === category;
+      return matchTitle && matchLocation && matchCategory;
+    });
+
+    if (filtered.length > 0) {
+      console.log(" 검색 성공:", filtered);
+    } else {
+      console.log(" 검색 결과 없음");
+    }
+};
+
 
   return (
     <>
