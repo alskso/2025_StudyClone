@@ -2,6 +2,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "../../pages/mainpage/MainPageStyle";
 import { Product } from "../../types";
+import SearchBar from "../../components/SearchBar/SearchBar"; //  분리된 검색바 import
 
 type MainPageProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,8 +11,6 @@ type MainPageProps = {
   products: Product[];
 };
 
-
-// MainPage.tsx
 type Category = "중고거래" | "알바" | "부동산" | "중고차" | "동네업체" | "동네생활" | "모임";
 
 const CATEGORIES: { key: Category; icon: ReactNode  }[] = [
@@ -89,23 +88,14 @@ const CATEGORIES: { key: Category; icon: ReactNode  }[] = [
 ];
 
 const KEYWORDS = ["에어컨", "러닝모임", "노트북", "원룸", "현대 중고차", "이사짐", "알바", "근처 맛집", "투표"];
-const NEIGHBORHOODS = [
-  "노원구","역삼동","문곰읍","봉담읍","배방읍","서초동","옥정동","신림동","불당동","향남읍",
-  "청담동","다산동","별내동","화도읍","다사읍","마곡동","압구정동","배곧동","고덕동","오창읍",
-];
+const NEIGHBORHOODS = ["노원구", "역삼동", "문곰읍", "봉담읍", "배방읍", "서초동", "옥정동", "신림동", "불당동", "향남읍", "창동"];
 
-// 3초마다 바뀔 단어들
 const ROTATE_WORDS = ["중고차", "러닝 모임", "알바", "노트북", "에어컨", "부동산"];
 
 function MainPage({ setShowModal, location, setLocation, products }: MainPageProps) {
-  const [category, setCategory] = useState<Category>("중고거래");
-  const [query, setQuery] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
-  const [openCat, setOpenCat] = useState(false); // 카테고리 드롭다운  // 지역 드롭다운 선택시 지역변경 모달
-
   const navigate = useNavigate();
 
-  // 3초마다 단어 변경
   useEffect(() => {
     const timer = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATE_WORDS.length);
@@ -113,145 +103,67 @@ function MainPage({ setShowModal, location, setLocation, products }: MainPagePro
     return () => clearInterval(timer);
   }, []);
 
-  // 검색 실행
-  const onSearch = () => {
-    const filtered = products.filter((p) => {
-      const matchTitle = p.title.toLowerCase().includes(query.toLowerCase());
-      const matchLocation = p.seller.location.includes(location);
-      const matchCategory = category === "중고거래" ? true : p.category === category;
-      return matchTitle && matchLocation && matchCategory;
-    });
-
-    if (filtered.length > 0) {
-      console.log(" 검색 성공:", filtered);
-    } else {
-      console.log(" 검색 결과 없음");
-    }
-};
-
-
   return (
-    <>
-      {/* 메인 헤더 */}
-      {/* <MainHeader /> */}
-
-      <S.Page>
-        <S.Hero>
-          <S.TitleRow>
-            <S.Title>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                >
-                  <path d="M12.0022 0.498047C6.10466 0.498047 2.06836 4.96307 2.06836 10.4215C2.06836 14.28 4.55706 17.553 6.82617 19.7593C7.98687 20.8782 9.1371 21.7775 10.005 22.3944C10.4679 22.7331 10.9513 23.0575 11.448 23.346C11.7722 23.5342 12.2218 23.5551 12.546 23.3669C13.0436 23.078 13.5163 22.7313 13.989 22.4049C14.8569 21.7879 16.0072 20.8887 17.1679 19.7698C19.437 17.5634 21.9257 14.3009 21.9257 10.4319C21.9361 4.96307 17.8998 0.498047 12.0022 0.498047ZM12.0022 14.4787C9.76451 14.4787 7.94504 12.6592 7.94504 10.4215C7.94504 8.18374 9.76451 6.36427 12.0022 6.36427C14.24 6.36427 16.0595 8.18374 16.0595 10.4215C16.0595 12.6592 14.24 14.4787 12.0022 14.4787Z" />
-                </svg>
-                {location}
-              </span>
-              에서{" "}
-              <S.FadeWord key={wordIndex}>{ROTATE_WORDS[wordIndex]}</S.FadeWord>
-              찾고 계신가요?
-            </S.Title>
-          </S.TitleRow>
-
-          {/* 위치 pill + 통합 검색바 (카테고리 드롭다운 포함) */}
-          <S.SearchRow>
-            <S.LocationPill onClick={() => {setShowModal(true)}}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                >
-                  <path d="M12.0022 0.498047C6.10466 0.498047 2.06836 4.96307 2.06836 10.4215C2.06836 14.28 4.55706 17.553 6.82617 19.7593C7.98687 20.8782 9.1371 21.7775 10.005 22.3944C10.4679 22.7331 10.9513 23.0575 11.448 23.346C11.7722 23.5342 12.2218 23.5551 12.546 23.3669C13.0436 23.078 13.5163 22.7313 13.989 22.4049C14.8569 21.7879 16.0072 20.8887 17.1679 19.7698C19.437 17.5634 21.9257 14.3009 21.9257 10.4319C21.9361 4.96307 17.8998 0.498047 12.0022 0.498047ZM12.0022 14.4787C9.76451 14.4787 7.94504 12.6592 7.94504 10.4215C7.94504 8.18374 9.76451 6.36427 12.0022 6.36427C14.24 6.36427 16.0595 8.18374 16.0595 10.4215C16.0595 12.6592 14.24 14.4787 12.0022 14.4787Z" />
-                </svg>
+    <S.Page>
+      <S.Hero>
+        {/* 제목 */}
+        <S.TitleRow>
+          <S.Title>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+                <path d="M12.0022 0.498047C6.10466 0.498047 ..." />
+              </svg>
               {location}
-              <S.Caret />
-            </S.LocationPill>
+            </span>
+            에서{" "}
+            <S.FadeWord key={wordIndex}>{ROTATE_WORDS[wordIndex]}</S.FadeWord>
+            찾고 계신가요?
+          </S.Title>
+        </S.TitleRow>
 
-            <S.SearchWrap onSubmit={(e) => { e.preventDefault(); onSearch(); }}>
-              {/* 카테고리(중고거래, 모임 등..) 버튼 */}
-              <S.CategoryButton type="button" onClick={() => setOpenCat(o => !o)}>
-                {category}
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-seed-icon="true" data-seed-icon-version="0.0.23" width="14" height="14" aria-hidden="true"><g>
-                  <path d="M8.17379 8C6.46508 8 5.54326 10.0042 6.65527 11.3016L10.4811 15.765C11.2792 16.6962 12.7199 16.6962 13.5181 15.765L17.3439 11.3016C18.4559 10.0042 17.5341 8 15.8253 8H8.17379Z" fill="currentColor"></path></g></svg>
-              </S.CategoryButton>
+        {/* SearchBar 컴포넌트 감색창 */}
+        <SearchBar
+          location={location}
+          setLocation={setLocation}
+          setShowModal={setShowModal}
+          products={products}
+        />
 
-              {/* 드롭다운 메뉴 */}
-              {openCat && (
-                <S.CategoryMenu onMouseLeave={() => setOpenCat(false)}>
-                  {CATEGORIES.map(c => (
-                    <S.CategoryItem
-                      key={c.key}
-                      data-active={c.key === category}
-                      onClick={() => { setCategory(c.key); setOpenCat(false); }}
-                    >
-                      {c.key}
-                    </S.CategoryItem>
-                  ))}
-                </S.CategoryMenu>
-              )}
+        {/* 인기 검색어 */}
+        <S.KeywordsRow>
+          <p>인기 검색어</p>
+          {KEYWORDS.map((k) => (
+            <S.Keyword key={k}>{k}</S.Keyword>
+          ))}
+        </S.KeywordsRow>
 
-              {/* 검색 입력 */}
-              <S.SearchInput
-                placeholder="검색어를 입력해주세요"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
+        {/* 카드 그리드 */}
+        <S.CardGrid>
+          {CATEGORIES.map(({ key, icon }) => (
+            <S.Card
+              key={key}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                if (key === "중고거래") navigate("/storemain");
+              }}
+            >
+              <S.CardIcon>{icon}</S.CardIcon>
+              <S.CardLabel>{key}</S.CardLabel>
+            </S.Card>
+          ))}
+        </S.CardGrid>
 
-              {/* 제출 버튼 */}
-              <S.SearchSubmit type="submit" aria-label="검색">
-                <svg viewBox="0 0 24 24"  fill="none" xmlns="http://www.w3.org/2000/svg" data-seed-icon="true" data-seed-icon-version="0.0.23" width="24" height="24"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6507 2.15225C11.1821 2.62088 11.1821 3.38068 11.6507 3.84931L18.1022 10.3008H2.99922C2.33648 10.3008 1.79922 10.8381 1.79922 11.5008C1.79922 12.1635 2.33648 12.7008 2.99922 12.7008H18.1022L11.6507 19.1523C11.1821 19.6209 11.1821 20.3807 11.6507 20.8493C12.1193 21.3179 12.8791 21.3179 13.3477 20.8493L21.8477 12.3493C22.0728 12.1243 22.1992 11.8191 22.1992 11.5008C22.1992 11.1825 22.0728 10.8773 21.8477 10.6523L13.3477 2.15225C12.8791 1.68362 12.1193 1.68362 11.6507 2.15225Z" fill="currentColor"></path></g></svg>
-              </S.SearchSubmit>
-            </S.SearchWrap>
-          </S.SearchRow>
-
-          {/* 인기 검색어 */}
-          <S.KeywordsRow>
-            <p>인기 검색어</p>
-          
-            {KEYWORDS.map((k) => (
-              <S.Keyword key={k} onClick={() => setQuery(k)}>
-                {k}
-              </S.Keyword>
-            ))}
-          </S.KeywordsRow>
-
-          {/* 카드 그리드 */}
-          <S.CardGrid>
-            {CATEGORIES.map(({ key, icon }) => (
-              <S.Card
-                key={key}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  if (key === "중고거래") {
-                    navigate("/storemain");
-                  }
-                }}
-              >
-                <S.CardIcon>{icon}</S.CardIcon>
-                <S.CardLabel>{key}</S.CardLabel>
-              </S.Card>
-            ))}
-          </S.CardGrid>
-
-
-          {/* 동네 칩 */}
-          <S.ChipsWrap>
-            {NEIGHBORHOODS.map((n) => (
-              <S.Chip key={n} onClick={() => setLocation(n)}>
-                {n}
-              </S.Chip>
-            ))}
-          </S.ChipsWrap>
-        </S.Hero>
-      </S.Page>
-    </>
+        {/* 동네 칩 */}
+        <S.ChipsWrap>
+          {NEIGHBORHOODS.map((n) => (
+            <S.Chip key={n} onClick={() => setLocation(n)}>
+              {n}
+            </S.Chip>
+          ))}
+        </S.ChipsWrap>
+      </S.Hero>
+    </S.Page>
   );
 }
 
