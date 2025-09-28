@@ -22,6 +22,64 @@ export const Hugger = styled.div`
     padding: 0 3vw;
   }
 `;
+
+export const SearchBarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  height: 90px;
+ padding-bottom:20px;
+`;
+
+export const SearchBarHugger = styled.div`
+  width:80%;
+`;
+
+// 인기 검색어 스타일
+export const PopularKeywords = styled.div`
+ display: flex;
+ flex-wrap: wrap; 
+ justify-content: center;
+ align-items: center;
+ width: 80%;
+ margin-top: 10px;
+ margin-left: -50px;
+`;
+
+export const KeywordItem = styled.div`
+  margin-right: 10px;
+  font-size: 14px;
+  color: #555;
+  border-radius: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.1s ease;
+  height: 26px;
+  display: flex;
+  align-items: center;
+
+  &:first-child {
+    border: none;
+    font-weight: 700;
+    color: #333;
+    margin-right: 10px;
+    cursor: default;
+  }
+
+  &:first-child:hover {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const Logo = styled.img`
     width: 23px;
 `
