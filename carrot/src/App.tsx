@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainHeader from "./components/Header/MainHeader";
+import Footer from "./components/Footer/Footer";
 import MainPage from "./pages/mainpage/MainPage";
 import DetailPage from "./pages/detailpage/DetailPage";
 import WritePage from "./pages/writepage/WritePage";
@@ -51,6 +52,7 @@ function App() {
         />
         <Route path="/writepage" element={<WritePage addProduct={addProduct} />} />
       </Routes>
+      <Footer /> 
     </BrowserRouter>
   );
 }
