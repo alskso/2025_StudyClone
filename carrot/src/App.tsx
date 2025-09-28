@@ -6,6 +6,7 @@ import DetailPage from "./pages/detailpage/DetailPage";
 import WritePage from "./pages/writepage/WritePage";
 import data from "./data/data.json";
 import { Product } from "./types"; // 타입 가져오기
+import StoreMain from "./pages/storemain/StoreMain";
 
 function App() {
   const [location, setLocation] = useState("쌍문동");
@@ -50,6 +51,17 @@ function App() {
           element={<DetailPage products={products} />} // 전달
         />
         <Route path="/writepage" element={<WritePage addProduct={addProduct} />} />
+        <Route
+          path="/storemain"
+          element={
+            <StoreMain
+              location={location}
+              setLocation={setLocation}
+              setShowModal={setShowModal}
+              products={products} // 전달
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

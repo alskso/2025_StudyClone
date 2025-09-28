@@ -129,7 +129,7 @@ export const Chip = styled.button`
   font-size: 14px;
   font-weight: 600;
   border-radius: 999px;
-  background: ##eeeff1;
+  background: #eeeff1;
   color: #2a3038;
   cursor: pointer;
   transition: background 0.15s ease;
