@@ -10,6 +10,7 @@ export const ImageContainer = styled.div`
   height: 150px;
   border-radius: 8px;
   overflow: hidden;
+  position: relative;
 `;
 
 export const Image = styled.img`
@@ -42,4 +43,16 @@ export const Price = styled.div`
 export const Meta = styled.div`
   font-size: 12px;
   color: #888;
+`;
+
+  export const SoldOverlay = styled.div`
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
 `;

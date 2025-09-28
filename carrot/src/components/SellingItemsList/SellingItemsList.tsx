@@ -1,13 +1,14 @@
 import SellingItems from "../../components/SellingItems/SellingItems";
 import * as S from "./SellingItemsListStyle";
 import data from "../../data/data.json";
+import { Product } from "../../types";
 
 interface SellingItemsListProps {
   filter?: (product: (typeof data.products)[0]) => boolean; // 선택적 필터 함수
 }
 
 export default function SellingItemsList({ filter }: SellingItemsListProps) {
-  const filteredProducts = filter
+  const filteredProducts: Product[] = filter
     ? data.products.filter(filter)
     : data.products;
 
