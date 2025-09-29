@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import MainHeader from "./components/Header/MainHeader";
 import Footer from "./components/Footer/Footer";
 import MainPage from "./pages/mainpage/MainPage";
 import DetailPage from "./pages/detailpage/DetailPage";
 import WritePage from "./pages/writepage/WritePage";
 import data from "./data/data.json";
-import { Product } from "./types"; // 타입 가져오기
+import { Product } from "./types";
 import StoreMain from "./pages/storemain/StoreMain";
 
+function AppWrapper() {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}
+
 function App() {
-  const [location, setLocation] = useState("쌍문동");
+  const [locationState, setLocation] = useState("쌍문동");
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const location = useLocation(); // 현재 경로 가져오기
 
   useEffect(() => {
     const stored = localStorage.getItem("products");
@@ -32,41 +41,47 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      <MainHeader location={location} showModal={showModal} setShowModal={setShowModal} />
-
+    <>
+      <MainHeader
+        location={locationState}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <Routes>
         <Route
-          path="/mainpage"
+          path="/"
           element={
             <MainPage
-              location={location}
+              location={locationState}
               setLocation={setLocation}
               setShowModal={setShowModal}
-              products={products} // 전달
+              products={products}
             />
           }
         />
         <Route
           path="/detailpage/:id"
-          element={<DetailPage products={products} />} // 전달
+          element={<DetailPage products={products} />}
         />
-        <Route path="/writepage" element={<WritePage addProduct={addProduct} />} />
+        <Route
+          path="/writepage"
+          element={<WritePage addProduct={addProduct} />}
+        />
         <Route
           path="/storemain"
           element={
             <StoreMain
-              location={location}
+              location={locationState}
               setLocation={setLocation}
               setShowModal={setShowModal}
-              products={products} // 전달
+              products={products}
             />
           }
         />
       </Routes>
-      <Footer /> 
-    </BrowserRouter>
+      {location.pathname !== "/writepage" && <Footer />} {/* writepage 제외 */}
+    </>
   );
 }
 
-export default App;
+export default AppWrapper;

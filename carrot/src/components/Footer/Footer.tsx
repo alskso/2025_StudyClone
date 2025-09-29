@@ -4,7 +4,7 @@ import * as S from "./FooterStyle";
 function Footer() {
   const location = useLocation();
 
-  const isMainPage = location.pathname === "/mainpage";
+  const isMainPage = location.pathname === "/";
   return (
     <S.FooterContainer>
       {!isMainPage && (

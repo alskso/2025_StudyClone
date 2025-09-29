@@ -17,7 +17,7 @@ function MainHeader({ showModal, setShowModal, location}: HeaderProps) {
     return (
         <S.Container>
         <S.Hugger>
-            <S.LogoContainer onClick={() => navigate("/mainpage")}>
+            <S.LogoContainer onClick={() => navigate("/")}>
             <S.Logo src="/assets/logo.png" alt="로고" />
             <S.LogoText>당근</S.LogoText>
             </S.LogoContainer>
