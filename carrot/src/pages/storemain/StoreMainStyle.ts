@@ -206,22 +206,22 @@ export const PriceApplyButton = styled.button`
 
 
 export const FloatingButton = styled.button`
-  position: fixed;
-  bottom: 60px;   /* 화면 하단에서 20px */
-  right: 120px;    /* 화면 우측에서 20px */
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #ff6600;
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: transform 0.2s;
+    position: fixed;
+    bottom: 60px; 
+    right: 120px;  
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ff6600;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
 
-  &:hover {
+    &:hover {
     transform: scale(1.1);
-  }
+}
 `;
