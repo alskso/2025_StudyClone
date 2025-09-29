@@ -127,7 +127,7 @@ function DetailPage({ products }: DetailPageProps) {
             <S.ShowMore to="/storemain">더 구경하기 &gt; </S.ShowMore>
           </S.BottomText>
           <SellingItemsList
-            filter={(p) => p.seller.name === product.seller.name}
+            filter={(p) => p.seller.name === product.seller.name}  limit={6}
           />
         </S.MoreHugger>
         <S.MoreHugger>
@@ -138,6 +138,7 @@ function DetailPage({ products }: DetailPageProps) {
           </S.BottomText>
           <SellingItemsList
             filter={(product) => product.views >= 50} // 조회수 50 이상만
+            limit={6}
           />
         </S.MoreHugger>
         {/* 사진 상세 모달 */}

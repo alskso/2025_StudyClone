@@ -207,6 +207,8 @@ function StoreMain({ location, setLocation, setShowModal, products }: StoreMainP
                       (!onlyAvailable || !p.isSold)
                     );
                   }}
+            initialCount={20}
+            step={20}
             />
           </div>
         </S.SeperationBox>
