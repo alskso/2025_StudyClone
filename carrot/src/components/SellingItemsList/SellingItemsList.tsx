@@ -8,13 +8,14 @@ interface SellingItemsListProps {
   filter?: (product: (typeof data.products)[0]) => boolean; 
   limit?: number;        
   initialCount?: number; 
-  step?: number;      
+  step?: number;
+  products: Product[];    
 }
 
-export default function SellingItemsList({ filter, limit, initialCount = 20, step = 20 }: SellingItemsListProps) {
+export default function SellingItemsList({ filter, limit, initialCount = 20, step = 20, products}: SellingItemsListProps) {
   const filteredProducts: Product[] = filter
-    ? data.products.filter(filter)
-    : data.products;
+    ? products.filter(filter)
+    : products;
 
   const [visibleCount, setVisibleCount] = useState(initialCount);
   useEffect(() => {

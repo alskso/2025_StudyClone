@@ -25,11 +25,22 @@ function App() {
 
   useEffect(() => {
     const stored = localStorage.getItem("products");
-    if (stored) {
-      setProducts(JSON.parse(stored));
-    } else {
-      setProducts(data.products);
+      if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // 저장된 데이터 + 더미 데이터 합치기 (중복 방지)
+        const merged = [
+          ...parsed,
+          ...data.products.filter(
+            (dummy) => !parsed.some((p: Product) => p.id === dummy.id)
+          ),
+        ];
+        setProducts(merged);
+        return;
+      }
     }
+    // 로컬스토리지에 아무 것도 없으면 더미만 세팅
+    setProducts(data.products);
   }, []);
 
   useEffect(() => {
