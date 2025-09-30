@@ -6,7 +6,7 @@ interface Product {
   images: string[];
   title: string;
   category: string;
-  time: string; // "1일 전", "3시간 전", "20분 전"
+  time: string;
   price: string;
   isSold?: boolean;
   seller: {
@@ -22,7 +22,6 @@ interface Props {
 export default function SellingItems({ product }: Props) {
   const navigate = useNavigate();
 
-  // ⏳ 문자열을 분 단위 숫자로 변환하는 함수
   const parseTimeToMinutes = (timeStr: string): number => {
     if (timeStr.includes("일")) {
       const days = parseInt(timeStr, 10);

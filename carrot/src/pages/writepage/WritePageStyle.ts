@@ -85,3 +85,49 @@ export const SubmitButton = styled.button`
     background-color: #e65c00;
   }
 `;
+
+export const CategoryGroup = styled.div`
+  margin: 20px 0;
+`;
+
+export const CategoryTitle = styled.p`
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+export const CategoryOption = styled.label`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px;
+  cursor: pointer;
+
+  input {
+        appearance: none; 
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        transition: 0.2s;
+    }
+
+  input:checked {
+        border-color: #ff6600;
+        background-color: #ff6600;
+    }
+
+    input:checked::after {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff; 
+        border-radius: 50%;
+    }
+`;

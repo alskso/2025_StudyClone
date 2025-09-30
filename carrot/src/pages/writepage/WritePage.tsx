@@ -7,6 +7,14 @@ type Props = {
   addProduct: (p: Product) => void;
 };
 
+const CATEGORIES = [
+  "디지털기기",
+  "생활가전",
+  "가구/인테리어",
+  "생활주방",
+  "뷰티/미용",
+];
+
 function WritePage({ addProduct }: Props) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -44,7 +52,7 @@ function WritePage({ addProduct }: Props) {
       id: Date.now(),
       images: images.length > 0 ? images : ["/assets/default.png"],
       title,
-      category: "중고거래",
+      category,
       time: "방금 전",
       price: price + "원",
       description,
@@ -61,6 +69,17 @@ function WritePage({ addProduct }: Props) {
     addProduct(newProduct);
     navigate("/"); // 작성 후 메인페이지로 이동
   };
+  
+  const CATEGORIES = [
+    "디지털기기",
+    "생활가전",
+    "가구/인테리어",
+    "생활주방",
+    "뷰티/미용",
+  ];
+
+  // ...
+  const [category, setCategory] = useState<string>(CATEGORIES[0]);
 
   return (
     <S.Container>
@@ -96,7 +115,22 @@ function WritePage({ addProduct }: Props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-
+        {/*카테고리 입력*/}
+      <S.CategoryGroup>
+          <S.CategoryTitle>카테고리</S.CategoryTitle>
+          {CATEGORIES.map((c) => (
+            <S.CategoryOption key={c}>
+              <input
+                type="radio"
+                name="category"
+                value={c}
+                checked={category === c}
+                onChange={(e) => setCategory(e.target.value)}
+              />
+              {c}
+            </S.CategoryOption>
+          ))}
+        </S.CategoryGroup>
         {/* 닉네임 입력 */}
         <S.Input
           type="text"

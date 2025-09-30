@@ -325,6 +325,7 @@ function StoreMain({
               filter={productFilter}
               initialCount={20}
               step={20}
+              products={products} 
             />{" "}
           </div>{" "}
         </S.SeperationBox>{" "}
