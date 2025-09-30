@@ -50,9 +50,10 @@ function WritePage({ addProduct }: Props) {
       description,
       views: 0,
       seller: {
-        name: nickname || "익명",   // ✅ 닉네임 추가
+        name: nickname || "익명", // ✅ 닉네임 추가
         location: location || "미정", // ✅ 판매 위치
       },
+      isSold: false,
     };
 
     console.log("새로 작성된 상품:", newProduct);
