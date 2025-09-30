@@ -21,7 +21,8 @@ function WritePage({ addProduct }: Props) {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [location, setLocation] = useState(""); // 판매 위치
-  const [nickname, setNickname] = useState(""); // ✅ 닉네임
+  const [nickname, setNickname] = useState(""); // 닉네임
+  const [category, setCategory] = useState<string>(CATEGORIES[0]); // 기본 카테고리
   const navigate = useNavigate();
 
   // 여러 장 업로드
@@ -45,12 +46,23 @@ function WritePage({ addProduct }: Props) {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // 모든 필수 입력값이 채워졌는지 확인
+  const isFormValid =
+    title.trim() !== "" &&
+    price.trim() !== "" &&
+    description.trim() !== "" &&
+    nickname.trim() !== "" &&
+    location.trim() !== "" &&
+    images.length > 0 &&
+    category.trim() !== "";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid) return; // 혹시 모를 방어 코드
 
     const newProduct: Product = {
       id: Date.now(),
-      images: images.length > 0 ? images : ["/assets/default.png"],
+      images,
       title,
       category,
       time: "방금 전",
@@ -58,8 +70,8 @@ function WritePage({ addProduct }: Props) {
       description,
       views: 0,
       seller: {
-        name: nickname || "익명", // ✅ 닉네임 추가
-        location: location || "미정", // ✅ 판매 위치
+        name: nickname || "익명",
+        location: location || "미정",
       },
       isSold: false,
     };
@@ -67,33 +79,29 @@ function WritePage({ addProduct }: Props) {
     console.log("새로 작성된 상품:", newProduct);
 
     addProduct(newProduct);
-    navigate("/"); // 작성 후 메인페이지로 이동
+    navigate("/storemain"); // 작성 후 메인페이지로 이동
   };
-  
-  const CATEGORIES = [
-    "디지털기기",
-    "생활가전",
-    "가구/인테리어",
-    "생활주방",
-    "뷰티/미용",
-  ];
-
-  // ...
-  const [category, setCategory] = useState<string>(CATEGORIES[0]);
 
   return (
     <S.Container>
       <S.Title>글 작성하기</S.Title>
       <S.Form onSubmit={handleSubmit}>
         {/* 이미지 업로드 */}
-        <S.ImageUpload type="file" accept="image/*" multiple onChange={handleImageChange} />
+        <S.ImageUpload
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+        />
 
         {/* 미리보기 */}
         <S.PreviewWrapper>
           {images.map((img, i) => (
             <S.PreviewBox key={i}>
               <S.PreviewImage src={img} alt="preview" />
-              <S.RemoveButton type="button" onClick={() => handleRemoveImage(i)}>×</S.RemoveButton>
+              <S.RemoveButton type="button" onClick={() => handleRemoveImage(i)}>
+                ×
+              </S.RemoveButton>
             </S.PreviewBox>
           ))}
         </S.PreviewWrapper>
@@ -115,8 +123,9 @@ function WritePage({ addProduct }: Props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        {/*카테고리 입력*/}
-      <S.CategoryGroup>
+
+        {/* 카테고리 입력 */}
+        <S.CategoryGroup>
           <S.CategoryTitle>카테고리</S.CategoryTitle>
           {CATEGORIES.map((c) => (
             <S.CategoryOption key={c}>
@@ -131,6 +140,7 @@ function WritePage({ addProduct }: Props) {
             </S.CategoryOption>
           ))}
         </S.CategoryGroup>
+
         {/* 닉네임 입력 */}
         <S.Input
           type="text"
@@ -147,7 +157,9 @@ function WritePage({ addProduct }: Props) {
           onChange={(e) => setLocation(e.target.value)}
         />
 
-        <S.SubmitButton type="submit">작성 완료</S.SubmitButton>
+        <S.SubmitButton type="submit" disabled={!isFormValid}>
+          작성 완료
+        </S.SubmitButton>
       </S.Form>
     </S.Container>
   );

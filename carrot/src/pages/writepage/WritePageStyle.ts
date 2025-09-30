@@ -84,6 +84,11 @@ export const SubmitButton = styled.button`
   &:hover {
     background-color: #e65c00;
   }
+
+  &:disabled {
+    background: #ccc; /* 비활성화 시 회색 */
+    cursor: not-allowed;
+  }
 `;
 
 export const CategoryGroup = styled.div`
