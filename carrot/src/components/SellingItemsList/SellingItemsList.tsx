@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SellingItems from "../../components/SellingItems/SellingItems";
 import * as S from "./SellingItemsListStyle";
 import data from "../../data/data.json";
@@ -17,7 +17,9 @@ export default function SellingItemsList({ filter, limit, initialCount = 20, ste
     : data.products;
 
   const [visibleCount, setVisibleCount] = useState(initialCount);
-
+  useEffect(() => {
+    setVisibleCount(initialCount);
+  }, [filter, initialCount]);
   const displayedProducts = limit
     ? filteredProducts.slice(0, limit)
     : filteredProducts.slice(0, visibleCount);
