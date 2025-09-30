@@ -96,21 +96,34 @@ function MainPage({ setShowModal, location, setLocation, products }: MainPagePro
   const [wordIndex, setWordIndex] = useState(0);
   const navigate = useNavigate();
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const timer = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATE_WORDS.length);
     }, 2000);
     return () => clearInterval(timer);
   }, []);
-
+ const handleSearch = (term: string) => {
+   setSearchTerm(term);
+   navigate(`/storemain?query=${term}`);
+ };
   return (
     <S.Page>
       <S.Hero>
         {/* 제목 */}
         <S.TitleRow>
           <S.Title>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+            <span
+              style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="30"
+                height="30"
+                fill="currentColor"
+              >
                 <path d="M12.0022 0.498047C6.10466 0.498047 ..." />
               </svg>
               {location}
@@ -127,6 +140,9 @@ function MainPage({ setShowModal, location, setLocation, products }: MainPagePro
           setLocation={setLocation}
           setShowModal={setShowModal}
           products={products}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={handleSearch}
         />
 
         {/* 인기 검색어 */}

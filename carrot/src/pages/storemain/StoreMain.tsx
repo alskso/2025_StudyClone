@@ -111,6 +111,7 @@ function StoreMain({
     ]
   );
 
+  const [searchTerm, setSearchTerm] = useState(""); 
   return (
     <>
       {" "}
@@ -129,6 +130,8 @@ function StoreMain({
             setSearchQuery(query.trim());
             setSelectedCategory(category || null);
           }}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         ></SearchBar>{" "}
       </S.SearchContainer>{" "}
       <S.ContentContainer>
@@ -325,7 +328,7 @@ function StoreMain({
               filter={productFilter}
               initialCount={20}
               step={20}
-              products={products} 
+              products={products}
             />{" "}
           </div>{" "}
         </S.SeperationBox>{" "}

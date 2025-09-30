@@ -11,6 +11,8 @@ function Header() {
   const [location, setLocation] = useState("쌍문동");
   const navigate = useNavigate();
   
+  const [searchTerm, setSearchTerm] = useState(""); 
+
   const popularKeywords: string[] = [
     "인기검색어",
     "에어컨",
@@ -44,6 +46,7 @@ const handleSearchFromHeader = (query: string, category: string | null) => {
     : "";
   navigate(`/storemain?query=${encodeURIComponent(query)}${categoryParam}`);
   setShowSearchBar(false);
+  setSearchTerm("");
 };
 
   return (
@@ -129,6 +132,8 @@ const handleSearchFromHeader = (query: string, category: string | null) => {
               setShowModal={setShowModal}
               products={data.products}
               onSearch={handleSearchFromHeader}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
             />
           </S.SearchBarHugger>
           <S.PopularKeywords>

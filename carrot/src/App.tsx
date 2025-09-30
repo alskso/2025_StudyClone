@@ -72,7 +72,7 @@ function App() {
         />
         <Route
           path="/detailpage/:id"
-          element={<DetailPage products={products} />}
+          element={<DetailPage products={products} setProducts={setProducts} />}
         />
         <Route
           path="/writepage"

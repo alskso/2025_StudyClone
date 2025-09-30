@@ -1,19 +1,19 @@
 import Header from "../../components/Header/Header";
 import SellingItemsList from "../../components/SellingItemsList/SellingItemsList";
-import data from "../../data/data.json";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Product } from "../../types";
 
 import * as S from "./DetailPageStyle";
 
 type DetailPageProps = {
   products: Product[];
+  setProducts: Dispatch<SetStateAction<Product[]>>;
 };
 
-function DetailPage({ products }: DetailPageProps) {
+function DetailPage({ products, setProducts }: DetailPageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAppModalOpen, setIsAppModalOpen] = useState(false); 
+  const [isAppModalOpen, setIsAppModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -25,6 +25,21 @@ function DetailPage({ products }: DetailPageProps) {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === Number(id));
 
+  useEffect(() => {
+    if (product) {
+      const updatedProducts = products.map((p) => {
+        if (p.id === Number(id)) {
+          return {
+            ...p,
+            views: p.views + 1,
+          };
+        }
+        return p;
+      });
+      setProducts(updatedProducts);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, setProducts]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!product) return <div>상품을 찾을 수 없습니다</div>;
@@ -151,7 +166,9 @@ function DetailPage({ products }: DetailPageProps) {
             <S.ShowMore to="/storemain">더 구경하기 &gt; </S.ShowMore>
           </S.BottomText>
           <SellingItemsList
-            filter={(p) => p.seller.name === product.seller.name}  limit={6} products={products} 
+            filter={(p) => p.seller.name === product.seller.name}
+            limit={6}
+            products={products}
           />
         </S.MoreHugger>
         <S.MoreHugger>
@@ -162,7 +179,8 @@ function DetailPage({ products }: DetailPageProps) {
           </S.BottomText>
           <SellingItemsList
             filter={(product) => product.views >= 50} // 조회수 50 이상만
-            limit={6} products={products} 
+            limit={6}
+            products={products}
           />
         </S.MoreHugger>
         {/* 사진 상세 모달 */}
