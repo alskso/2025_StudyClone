@@ -8,6 +8,7 @@ type Props = {
   setShowModal: (v: boolean) => void;
   products: Product[];
   onSearch?: (query: string, category: string | null) => void;
+  currentSearchQuery?: string;
 };
 
 type Category = "중고거래" | "알바" | "부동산" | "중고차" | "동네업체" | "동네생활" | "모임";
@@ -27,13 +28,9 @@ function SearchBar({
   const [query, setQuery] = useState("");
   const [openCat, setOpenCat] = useState(false);
 
-  // 검색 실행
 
   const handleSearchSubmit = () => {
-    // onSearch 프롭이 제공된 경우에만 실행 (StoreMain에서 사용될 때)
     if (onSearch) {
-      // ✅ 현재 query와 category 상태를 StoreMain으로 전달합니다.
-      // StoreMain은 이 값을 받아서 searchQuery 및 selectedCategory 상태를 업데이트할 것입니다.
       onSearch(query, category === "중고거래" ? null : category);
     }
   };

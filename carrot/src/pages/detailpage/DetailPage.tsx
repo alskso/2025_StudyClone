@@ -29,7 +29,6 @@ function DetailPage({ products }: DetailPageProps) {
 
   if (!product) return <div>상품을 찾을 수 없습니다</div>;
 
-  // 기존 image → images 배열로 가정
   const images = product.images || [product.images];
 
   const handlePrev = () => {

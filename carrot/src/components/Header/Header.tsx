@@ -34,9 +34,17 @@ function Header() {
     "레고",
     "의자",
   ];
+  
   const handleKeywordClick = (keyword: string) => {
-    console.log(`검색어 클릭: ${keyword}`); //검색어를 클릭하면 검색창에 뜨지 않고 바로 관련 중고메인페이지로 이동하게 할 예정
+    navigate(`/storemain?query=${encodeURIComponent(keyword)}`);
   };
+const handleSearchFromHeader = (query: string, category: string | null) => {
+  const categoryParam = category
+    ? `&category=${encodeURIComponent(category)}`
+    : "";
+  navigate(`/storemain?query=${encodeURIComponent(query)}${categoryParam}`);
+  setShowSearchBar(false);
+};
 
   return (
     <S.Container>
@@ -120,6 +128,7 @@ function Header() {
               setLocation={setLocation}
               setShowModal={setShowModal}
               products={data.products}
+              onSearch={handleSearchFromHeader}
             />
           </S.SearchBarHugger>
           <S.PopularKeywords>
