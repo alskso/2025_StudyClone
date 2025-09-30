@@ -58,7 +58,7 @@ function WritePage({ addProduct }: Props) {
     console.log("새로 작성된 상품:", newProduct);
 
     addProduct(newProduct);
-    navigate("/mainpage"); // 작성 후 메인페이지로 이동
+    navigate("/"); // 작성 후 메인페이지로 이동
   };
 
   return (

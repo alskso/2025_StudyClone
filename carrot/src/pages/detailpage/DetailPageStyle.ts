@@ -186,6 +186,19 @@ export const ToTheApp = styled.input`
   }
 `;
 
+export const ToTheApp_none = styled.input`
+  height: 40px;
+  border: none;
+  background-color: #888b94;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: #555d6d;
+  }
+`;
 
 export const MoreHugger = styled.div`
   display: flex;
