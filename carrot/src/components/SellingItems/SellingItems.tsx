@@ -6,7 +6,7 @@ interface Product {
   images: string[];
   title: string;
   category: string;
-  time: string;
+  time: string; // "1일 전", "3시간 전", "20분 전"
   price: string;
   isSold?: boolean;
   seller: {
@@ -14,13 +14,31 @@ interface Product {
     location: string;
   };
 }
+
 interface Props {
   product: Product;
 }
 
 export default function SellingItems({ product }: Props) {
   const navigate = useNavigate();
-  console.log("상품:", product.title, "isSold:", product.isSold);
+
+  // ⏳ 문자열을 분 단위 숫자로 변환하는 함수
+  const parseTimeToMinutes = (timeStr: string): number => {
+    if (timeStr.includes("일")) {
+      const days = parseInt(timeStr, 10);
+      return days * 24 * 60;
+    } else if (timeStr.includes("시간")) {
+      const hours = parseInt(timeStr, 10);
+      return hours * 60;
+    } else if (timeStr.includes("분")) {
+      const minutes = parseInt(timeStr, 10);
+      return minutes;
+    }
+    return 0;
+  };
+
+  const elapsedMinutes = parseTimeToMinutes(product.time);
+  const isExpired = elapsedMinutes >= 30 * 24 * 60;
 
   const truncatedTitle =
     product.title.length > 12
@@ -30,15 +48,19 @@ export default function SellingItems({ product }: Props) {
   const handleClick = () => {
     navigate(`/detailpage/${product.id}`);
   };
-  
+
   return (
     <S.Card onClick={handleClick} style={{ cursor: "pointer" }}>
       <S.ImageContainer>
         <S.Image src={product.images[0]} alt="상품이미지" />
-      {product.isSold && ( // ✅ 판매 완료 표시
-        <S.SoldOverlay>판매 완료</S.SoldOverlay>
-      )}
+
+        {/* 판매 완료 또는 판매 불가 표시 */}
+        {product.isSold && <S.SoldOverlay>판매 완료</S.SoldOverlay>}
+        {!product.isSold && isExpired && (
+          <S.SoldOverlay>판매 불가</S.SoldOverlay>
+        )}
       </S.ImageContainer>
+
       <S.Info>
         <S.Title>{truncatedTitle}</S.Title>
         <S.Price>{product.price}</S.Price>
@@ -47,6 +69,5 @@ export default function SellingItems({ product }: Props) {
         </S.Meta>
       </S.Info>
     </S.Card>
-    
   );
 }

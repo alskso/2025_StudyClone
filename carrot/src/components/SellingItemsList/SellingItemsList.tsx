@@ -6,9 +6,9 @@ import { Product } from "../../types";
 
 interface SellingItemsListProps {
   filter?: (product: (typeof data.products)[0]) => boolean; 
-  limit?: number;        // ✅ 고정 개수 (예: 6개 섹션)
-  initialCount?: number; // ✅ 더보기 리스트 초기값 (예: 20개 시작)
-  step?: number;         // ✅ 더보기 단위 (예: 20개씩 추가)
+  limit?: number;        
+  initialCount?: number; 
+  step?: number;      
 }
 
 export default function SellingItemsList({ filter, limit, initialCount = 20, step = 20 }: SellingItemsListProps) {
@@ -16,10 +16,8 @@ export default function SellingItemsList({ filter, limit, initialCount = 20, ste
     ? data.products.filter(filter)
     : data.products;
 
-  // ✅ visibleCount는 "더보기 모드"일 때만 사용
   const [visibleCount, setVisibleCount] = useState(initialCount);
 
-  // ✅ limit 있으면 무조건 그 개수까지만 보여줌
   const displayedProducts = limit
     ? filteredProducts.slice(0, limit)
     : filteredProducts.slice(0, visibleCount);

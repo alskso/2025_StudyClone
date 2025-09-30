@@ -40,6 +40,23 @@ function DetailPage({ products }: DetailPageProps) {
     if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
   };
 
+  const parseTimeToMinutes = (timeStr: string): number => {
+    if (timeStr.includes("일")) {
+      const days = parseInt(timeStr, 10);
+      return days * 24 * 60;
+    } else if (timeStr.includes("시간")) {
+      const hours = parseInt(timeStr, 10);
+      return hours * 60;
+    } else if (timeStr.includes("분")) {
+      const minutes = parseInt(timeStr, 10);
+      return minutes;
+    }
+    return 0;
+  };
+
+  const elapsedMinutes = parseTimeToMinutes(product.time);
+  const isExpired = elapsedMinutes >= 30 * 24 * 60;
+
   return (
     <>
       <Header />
@@ -114,11 +131,19 @@ function DetailPage({ products }: DetailPageProps) {
             <S.Price>{product.price}</S.Price>
             <S.Description>{product.description}</S.Description>
             <S.Reactions> 채팅 2 · 관심12 · 조회 {product.views}</S.Reactions>
-            <S.ToTheApp
-              type="button"
-              value="당근 앱에서 보기"
-              onClick={() => setIsAppModalOpen(true)}
-            />
+            {product.isSold || isExpired ? (
+              <S.ToTheApp_none
+                type="button"
+                value={product.isSold ? "판매 완료" : "판매 불가"}
+                disabled
+              />
+            ) : (
+              <S.ToTheApp
+                type="button"
+                value="당근 앱에서 보기"
+                onClick={() => setIsAppModalOpen(true)}
+              />
+            )}
           </S.RightSection>
         </S.Hugger>
         <S.MoreHugger>
