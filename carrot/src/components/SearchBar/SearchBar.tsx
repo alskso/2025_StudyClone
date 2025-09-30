@@ -9,6 +9,8 @@ type Props = {
   products: Product[];
   onSearch?: (query: string, category: string | null) => void;
   currentSearchQuery?: string;
+  searchTerm: string; // MainPage에서 전달받는 현재 검색어
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type Category = "중고거래" | "알바" | "부동산" | "중고차" | "동네업체" | "동네생활" | "모임";
